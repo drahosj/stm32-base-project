@@ -12,7 +12,7 @@ export LD=arm-none-eabi-ld
 export PROJECT_ROOT=.
 
 # Drivers path
-export DRIVERS=$(PROJECT_ROOT)/vendor/Drivers
+export DRIVERS=$(PROJECT_ROOT)/Drivers
 
 # Include Paths
 #export IFLAGS=-I$(DRIVERS)/BSP/STM32F4xx-Nucleo/
