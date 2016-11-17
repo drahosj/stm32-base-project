@@ -1,6 +1,6 @@
 # Global project variables
 # MCU Define
-export MCU_MODEL=STM32F411xE
+export MCU_MODEL=STM32F401xE
 
 # Toolchain
 export CC=arm-none-eabi-gcc
@@ -13,40 +13,48 @@ export PROJECT_ROOT=.
 
 # Drivers path
 export DRIVERS=$(PROJECT_ROOT)/Drivers
+export MIDDLEWARES=$(PROJECT_ROOT)/Middlewares
 
 # Include Paths
 #export IFLAGS=-I$(DRIVERS)/BSP/STM32F4xx-Nucleo/
-export IFLAGS+= -I$(DRIVERS)/CMSIS/Include/
-export IFLAGS+= -I$(DRIVERS)/CMSIS/Device/ST/STM32F4xx/Include
-export IFLAGS+= -I$(DRIVERS)/STM32F4xx_HAL_Driver/Inc
-export IFLAGS+= -I$(PROJECT_ROOT)/Inc/
+export IFLAGS+=-I$(DRIVERS)/CMSIS/Include/
+export IFLAGS+=-I$(DRIVERS)/CMSIS/Device/ST/STM32F4xx/Include
+export IFLAGS+=-I$(DRIVERS)/STM32F4xx_HAL_Driver/Inc
+export IFLAGS+=-I$(PROJECT_ROOT)/Inc/
+export IFLAGS+=-I$(MIDDLEWARES)/Third_Party/FreeRTOS/Source/CMSIS_RTOS/
+export IFLAGS+=-I$(MIDDLEWARES)/Third_Party/FreeRTOS/Source/include/
+export IFLAGS+=-I$(MIDDLEWARES)/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/
+
 
 export CPPFLAGS= $(IFLAGS)
 
 # Set flags
-export CFLAGS= --specs=nosys.specs -mthumb -mcpu=cortex-m4 -mfloat-abi=hard
-export CFLAGS+= -mfpu=fpv4-sp-d16 -g -D$(MCU_MODEL)
+export CFLAGS=--specs=nosys.specs -mthumb -mcpu=cortex-m4 -mfloat-abi=hard
+export CFLAGS+=-mfpu=fpv4-sp-d16 -g -D$(MCU_MODEL)
 
 # Bitchy nag-nag mode settings
-export CFLAGS+= -Wall -Wextra -Wpedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-but-set-variable -std=gnu11
+export CFLAGS+=-Wall -Wextra -Wpedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-but-set-variable -std=gnu11
 
 ###### CONFIGURATION #######
 #Source file definitions
 # Files is Src
-export APPLICATION_FILES=main.c stm32f4xx_hal_msp.c
+export APPLICATION_FILES=main.c stm32f4xx_hal_msp.c stm32f4xx_hal_timebase_TIM.c
 export APPLICATION_FILES+=stm32f4xx_it.c system_stm32f4xx.c
+# Bodgy hack because actually adding RTOS is hard
+export APPLICATION_FILES+=cmsis_os.c croutine.c event_groups.c freertos.c
+export APPLICATION_FILES+=heap_4.c list.c main.c port.c queue.c tasks.c timers.c
 
 # Files in Src/drivers
 export DRIVER_FILES=
 
 # HAL Requirements
-export HAL_MODULES=gpio uart rcc dma cortex
+export HAL_MODULES=gpio uart rcc dma cortex spi tim tim_ex
 
 # Startup
-export STARTUP=startup_stm32f411xe.s
+export STARTUP=startup_stm32f401xe.s
 
 #Linker Script
-export LINKER_SCRIPT=STM32F411RETx_FLASH.ld
+export LINKER_SCRIPT=SW4STM32/stm32_test/STM32F401RETx_FLASH.ld
 
 #Library flags
 export LFLAGS=

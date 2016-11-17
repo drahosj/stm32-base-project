@@ -1,10 +1,10 @@
 /**
   ******************************************************************************
-  * @file      startup_stm32f411xe.s
+  * @file      startup_stm32f401xe.s
   * @author    MCD Application Team
   * @version   V2.5.1
   * @date      28-June-2016
-  * @brief     STM32F411xExx Devices vector table for GCC based toolchains. 
+  * @brief     STM32F401xExx Devices vector table for GCC based toolchains. 
   *            This module performs:
   *                - Set the initial SP
   *                - Set the initial PC == Reset_Handler,
@@ -242,8 +242,7 @@ g_pfnVectors:
   .word     FPU_IRQHandler                    /* FPU                          */
   .word     0                                 /* Reserved                     */                   
   .word     0                                 /* Reserved                     */
-  .word     SPI4_IRQHandler                   /* SPI4                         */
-  .word     SPI5_IRQHandler                   /* SPI5                         */  
+  .word     SPI4_IRQHandler                   /* SPI4                         */     
                     
 /*******************************************************************************
 *
@@ -445,10 +444,7 @@ g_pfnVectors:
    .thumb_set FPU_IRQHandler,Default_Handler  
 
    .weak      SPI4_IRQHandler                  
-   .thumb_set SPI4_IRQHandler,Default_Handler
-
-   .weak      SPI5_IRQHandler                  
-   .thumb_set SPI5_IRQHandler,Default_Handler    
+   .thumb_set SPI4_IRQHandler,Default_Handler 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 
